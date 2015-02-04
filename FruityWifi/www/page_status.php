@@ -1,26 +1,15 @@
-<? 
-/*
-    Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
+<?
+include_once "config/config.php";
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+require_once WWWPATH."includes/login_check.php";
+require_once WWWPATH."includes/filter_getpost.php";
+include_once WWWPATH."includes/functions.php";
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
+include_once WWWPATH."includes/menu.php";
 ?>
-<? include "login_check.php"; ?>
-<? include "config/config.php" ?>
-<? include "menu.php" ?>
+
 <meta name="viewport" content="initial-scale=0.50, width=device-width" />
-<br>
+<br/>
 
 <?
 function addDivs($service, $alias, $edit, $path)
@@ -28,33 +17,33 @@ function addDivs($service, $alias, $edit, $path)
     echo "
         <div style='text-align:left;'>
             <div style='border:0px solid red; display:inline-block; width:80px; text-align:right;'>$alias</div>
-    
+
             <div name='$service' id='$service' style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div>
             <div style='border:0px solid red; display:inline-block;'>|</div>
-            
+
             <div id='$service-start' style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                     <a href='#' onclick=\"setEnableDisable('serviceAction','$service','start')\">start</a>
             </div>
             <div id='$service-stop' style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                     <a href='#' onclick=\"setEnableDisable('serviceAction','$service','stop')\">stop</a>
             </div>
-            
+
             <div id='$service-loading' style='display:inline-block;'>
                     <img src='img/loading.gif'>
             </div>
-            
+
             <div style='border:0px solid red; display:inline-block;'>|</div>
             <div id='$service-stop' style='display:inline-block;font-weight:bold; width:36px;'>
                     <a href='$edit'>edit</a>
             </div>
-            
+
             <div style='border:0px solid red; display:inline-block;'>|</div>
             <div id='$service-logOn' style='display:inline-block;'><a href='#' onclick=\"getLogs('$service', '$path')\">log</a></div>
             <div id='$service-logOff' style='display:inline-block;visibility:hidden;'><a href='#' onclick=\"removeLogs('$service')\">off</a></div>
             <div style='display:inline-block;' id='i_$service'></div>
             <div style='display:inline-block;' id='i_status_$service'></div>
-            
-            
+
+
             <script>
                             //getEnableDisabled('$service')
                             getStatusInit('getStatus','$service');
@@ -70,32 +59,30 @@ function addDivs($service, $alias, $edit, $path)
             });
             </script>
         </div>
-        
-        ";	
+
+        ";
 }
 ?>
 
 <div class="rounded-top" align="center"> Services </div>
 <div class="rounded-bottom">
 <?
-include "functions.php";
 
 //addDivs("s_wireless", "Wireless", "page_config.php", "../logs/dnsmasq.log");
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET['service'], "msg.php", $regex_extra);
-    regex_standard($_GET['action'], "msg.php", $regex_extra);
+    @regex_standard($_GET['service'], "msg.php", $regex_extra);
+    @regex_standard($_GET['action'], "msg.php", $regex_extra);
 }
-$service = $_GET['service'];
-$action = $_GET['action'];
+$service = @$_GET['service'];
+$action = @$_GET['action'];
 
-?>
+//!Wireless
 
-<?
 //$iswlanup = exec("/sbin/ifconfig wlan0 | grep UP | awk '{print $1}'");
 
-if ($ap_mode == "1") { 
+if ($ap_mode == "1") {
 	$iswlanup = exec("ps auxww | grep hostapd | grep -v -e grep");
 } else if ($ap_mode == "2") {
 	$iswlanup = exec("ps auxww | grep airbase | grep -v -e grep");
@@ -105,31 +92,25 @@ if ($ap_mode == "1") {
 	$iswlanup = exec("ps auxww | grep hostapd | grep -v -e grep");
 }
 
-//if ($iswlanup == "UP") {
-
 echo "<div style='text-align:left;'>";
+//echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
+echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>".$hostapd_modes[$ap_mode]."</div> ";
 if ($iswlanup != "") {
-    //echo "&nbsp;&nbsp;&nbsp;&nbsp;Wireless  <font color='lime'><b>enabled</b></font>.&nbsp; | <a href='scripts/status_wireless.php?service=wireless&action=stop' class='div-a'><b>stop</b></a><br />";
 
-    echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
     echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
     echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
-    
+
     echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                 <a href='scripts/status_wireless.php?service=wireless&action=stop' class='div-a'>stop</a>
             </div>";
+} else {
 
-} else { 
-    //echo "&nbsp;&nbsp;&nbsp;&nbsp;Wireless  <font color='red'><b>disabled</b></font>. | <a href='scripts/status_wireless.php?service=wireless&action=start' class='div-a'><b>start</b></a><br />"; 
-	
-    echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
     echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
     echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
 
     echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                 <a href='scripts/status_wireless.php?service=wireless&action=start' class='div-a'>start</a>
             </div>";
-
 }
 echo "</div>";
 ?>
@@ -140,19 +121,19 @@ if (count($output) > 0) {
     ?>
     <t-able border=0 width='100%' cellspacing=0 cellpadding=0>
     <?
-	
+
     for ($i=0; $i < count($output); $i++) {
         echo "<div style='text-align:left;'>";
-        
+
             $mod_type = "";
             if ($output[$i] != "") {
                 include $output[$i];
                 $module_path = str_replace("_info_.php","",$output[$i]);
-                
+
                 if ($mod_panel == "show" and $mod_type == "service") {
                 //echo "<tr>";
                     //echo "<td class='rounded-bottom-body' align='right' s-tyle='padding-right:5px; padding-left:5px; padding-bottom:1px; width:10px; color: #445257;' nowrap>";
-                    if ($mod_alias != "") { 
+                    if ($mod_alias != "") {
                         //echo $mod_alias;
                         echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
                     } else {
@@ -166,28 +147,28 @@ if (count($output) > 0) {
                         if ($isModuleUp != "") {
                             //echo "<font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'><b>stop</b></a>";
                             //echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>";
-                            
+
                             echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
                             echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
                             echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                                         <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'>stop</a>
                                     </div>";
-                                    
+
                             echo "<div style='border:0px solid red; display:inline-block;'>|</div>
                                     <div style='display:inline-block;font-weight:bold; width:36px;'>
                                         <a href='modules/$mod_name/'>view</a>
                                     </div>";
-                                
-                        } else { 
-                            //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>"; 
-                            //echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>"; 
+
+                        } else {
+                            //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>";
+                            //echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>";
 
                             echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
                             echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
                             echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                                         <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'>start</a>
                                     </div>";
-                                    
+
                             echo "<div style='border:0px solid red; display:inline-block;'>|</div>
                                     <div style='display:inline-block;font-weight:bold; width:36px;'>
                                         <a href='modules/$mod_name/'>edit</a>
@@ -203,7 +184,7 @@ if (count($output) > 0) {
             }
         echo "</div>";
     }
-	
+
     ?>
     </t-able>
 <?
@@ -221,26 +202,26 @@ if (count($output) > 0) {
 ?>
 <div class="rounded-top" align="center"> Modules </div>
 <div class="rounded-bottom">
-    
+
     <?
     if (count($output) > 0) {
     ?>
         <t-able border=0 width='100%' cellspacing=0 cellpadding=0>
         <?
-        //exec("find ./modules -name '_info_.php'",$output);
+        //exec_("find ./modules -name '_info_.php'",$output);
         //print_r($output[0]);
-    
+
         for ($i=0; $i < count($output); $i++) {
 	    echo "<div style='text-align:left;'>";
                 $mod_type = "";
                 if ($output[$i] != "") {
                     include $output[$i];
                     $module_path = str_replace("_info_.php","",$output[$i]);
-                    
+
                     if ($mod_panel == "show" and $mod_type != "service") {
                     //echo "<tr>";
                         //echo "<td class='rounded-bottom-body' align='right' s-tyle='padding-right:5px; padding-left:5px; padding-bottom:1px; width:10px; color: #445257;' nowrap>";
-                        if ($mod_alias != "") { 
+                        if ($mod_alias != "") {
                         //    echo $mod_alias;
 			    echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
                         } else {
@@ -254,47 +235,47 @@ if (count($output) > 0) {
                             if ($isModuleUp != "") {
                                 //echo "<font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'><b>stop</b></a>";
                                 //echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>";
-				
+
 				echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
 				echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
 				echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
 					    <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'>stop</a>
 					</div>";
-					
+
 				echo "<div style='border:0px solid red; display:inline-block;'>|</div>
 					<div style='display:inline-block;font-weight:bold; width:36px;'>
 					    <a href='modules/$mod_name/'>view</a>
 					</div>";
-				
-                            } else { 
-                                //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>"; 
+
+                            } else {
+                                //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>";
                                 //echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>";
-				
+
 				echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
 				echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
 				echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
 					    <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'>start</a>
 					</div>";
-					
+
 				echo "<div style='border:0px solid red; display:inline-block;'>|</div>
 					<div style='display:inline-block;font-weight:bold; width:36px;'>
 					    <a href='modules/$mod_name/'>edit</a>
 					</div>";
-				
+
                             }
                         $mod_panel = "";
                         $mod_alias = "";
                         }
                         //echo "</td>";
                     //echo "</tr>";
-                    }        
+                    }
                     $mod_installed[$i] = $mod_name;
                 }
 	    echo "</div>";
             }
         ?>
         </t-able>
-    <? 
+    <?
     } else {
         echo "<div>No modules have been installed.<br>Install them from the <a href='page_modules.php'><b>Available Modules</b></a> list.</div>";
     }
@@ -320,12 +301,12 @@ if (count($output) > 0) {
         }
     }
 
-    if ($_GET['reveal_public_ip'] == 1) {
+    if (isset($_GET['reveal_public_ip']) and $_GET['reveal_public_ip'] == 1) {
         echo "public: " . exec("curl ident.me");
     } else {
         echo "public: <a href='page_status.php?reveal_public_ip=1'>reveal ip</a>";
     }
-    
+
     ?>
 </div>
 
@@ -335,7 +316,15 @@ if (count($output) > 0) {
 <div class="rounded-bottom">
     <?
     exec("/sbin/iw dev $io_in_iface station dump |grep Stat", $stations);
-    for ($i=0; $i < count($stations); $i++) echo str_replace("Station", "", $stations[$i]) . "<br>";
+    for ($i=0; $i < count($stations); $i++) {
+	    $station = trim(str_replace("Station", "", $stations[$i]));
+	    $stationmac = preg_replace("/.*(.{2}):(.{2}):(.{2}):(.{2}):(.{2}):(.{2}).*/", '\1\2\3\4\5\6', $station);
+	    echo  $station."
+	    <a href=\"scripts/status_wireless.php?service=wireless&action=kick&station=".$stationmac."\">!k</a>
+	    <a href=\"scripts/status_wireless.php?service=wireless&action=ban&station=".$stationmac."\">!b</a>
+	    <br/>";
+    }
+
     ?>
 </div>
 
@@ -344,18 +333,44 @@ if (count($output) > 0) {
 <div class="rounded-top" align="center"> DHCP </div>
 <div class="rounded-bottom">
     <?
-    $filename = "/usr/share/fruitywifi/logs/dhcp.leases";
-    $fh = fopen($filename, "r"); //or die("Could not open file.");
+    $filename = LOGPATH."/dhcp.leases";
+
     if ( 0 < filesize( $filename ) ) {
+	    $fh = fopen($filename, "r"); //or die("Could not open file.");
         $data = fread($fh, filesize($filename)); //or die("Could not read file.");
-    }
-    fclose($fh);
-    $data = explode("\n",$data);
-    
-    for ($i=0; $i < count($data); $i++) {
-        $tmp = explode(" ", $data[$i]);
-        echo $tmp[2] . " " . $tmp[1] . " " . $tmp[3] . "<br>";
-    }
-    ?>
+		fclose($fh);
+
+	    $data = explode("\n",$data);
+	?>
+	<table border="1" style="border-collapse:collapse" width="100%">
+	<tr>
+	<th>IP</th>
+	<th>MAC</th>
+	<th>Hostname</th>
+	</tr>
+	<?
+
+		for ($i=0; $i < count($data); $i++) {
+			if(substr_count($data[$i], " ")>=3) {
+			$tmp = explode(" ", $data[$i]);
+				//echo $tmp[2] . " " . $tmp[1] . " " . $tmp[3] . "<br/>";
+				echo "<tr>";
+				echo "<td>", $tmp[2], "</td>";
+				$if_online = false;
+				foreach ($stations as $station) {
+					if (strpos($station, $tmp[1])!==false)
+						$if_online = true;
+				}
+				if ($if_online)
+					echo "<td><font color=\"blue\"><b>", $tmp[1], "</b></font></td>";
+				else
+					echo "<td>", $tmp[1], "</td>";
+				echo "<td>", $tmp[3], "</td>";
+				echo "</tr>";
+			}
+		}
+	}
+
+	?>
 </div>
 

@@ -1,33 +1,18 @@
-<? 
-/*
-    Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
-?>
 <?
+include_once dirname(__FILE__)."/../config/config.php";
 
-$service = $_POST["service"];
+require_once WWWPATH."includes/login_check.php";
+require_once WWWPATH."includes/filter_getpost.php";
+//include_once WWWPATH."includes/functions.php";
+
+$service = @$_POST['service'];
 $service = str_replace("mod_", "", $service);
 
-//$service = "nessus";
+$ismoduleup = "";
 
 if ($service == "s_wireless") {
-    
-    include "../config/config.php";
-    
-    if ($ap_mode == "1") { 
+
+    if ($ap_mode == "1") {
         $ismoduleup = exec("ps auxww | grep hostapd | grep -v -e grep");
     } else if ($ap_mode == "2") {
         $ismoduleup = exec("ps auxww | grep airbase | grep -v -e grep");
@@ -36,21 +21,24 @@ if ($service == "s_wireless") {
     } else if ($ap_mode == "4") {
         $ismoduleup = exec("ps auxww | grep hostapd | grep -v -e grep");
     }
-    
+
 } else if ($service == "s_phishing") {
 
     $ismoduleup = exec("grep 'FruityWifi-Phishing' /var/www/index.php");
 
 } else {
-    include "../modules/$service/_info_.php";
-    $ismoduleup = exec("$mod_isup");   
+	if(file_exists("../modules/".$service."/_info_.php")) {
+	    include "../modules/".$service."/_info_.php";
+	    if (isset($mod_isup))
+	    	$ismoduleup = exec($mod_isup);
+	}
 }
-    
+
 if ($ismoduleup != "") {
     $output[0] = "true";
 } else {
-    $output[0] = "false";    
+    $output[0] = "false";
 }
-    
+
 echo json_encode($output);
 ?>

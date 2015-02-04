@@ -1,37 +1,21 @@
-<? 
-/*
-	Copyright (C) 2013  xtr4nge [_AT_] gmail.com
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
-?>
 <?
-//header('Location: page_status.php');
-
-
+include_once dirname(__FILE__)."/config/config.php";
+//Redirect logged users
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header('Location: '.WEBPATH.'page_status.php');
+    exit;
+}
 ?>
-
-<link href="style.css" rel="stylesheet" type="text/css">
-<link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
+<link href="<?=WEBPATH?>css/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" type="image/x-icon" href="<?=WEBPATH?>img/favicon.ico"/>
 
 <div class="menu-bc" s-tyle="background-color: #576971;">
-
 	<table>
 		<tr>
 			<td>
 				<div class="m-enu">
-				<img src="img/logo.png" width=32><img style="padding-left:2px; padding-top:0px;" src="img/logo-fw.png">
+				<img src="<?=WEBPATH?>img/logo.png" width=32><img style="padding-left:2px; padding-top:0px;" src="<?=WEBPATH?>img/logo-fw.png">
 				</div>
 			</td>
 			<td>
@@ -41,7 +25,7 @@
 	</table>
 </div>
 
-<i-mg src="img/logo.png">
+<i-mg src="<?=WEBPATH?>img/logo.png">
 
 <br><br>
 
@@ -51,7 +35,7 @@
 <div class="rounded-bottom" align="center">
 
     <form action="login.php" method="post" autocomplete="off">
-        <? 
+        <?
         /*
         &nbsp;&nbsp;&nbsp;&nbsp;user: <input name="user" class="input"><br>
         &nbsp;&nbsp;&nbsp;&nbsp;pass: <input name="pass" type="password" class="input"><br>
@@ -62,27 +46,26 @@
         <table class="general">
             <tr>
                 <td>
-                    user: 
+                    user:
                 </td>
                 <td>
-                    <input name="user" class="input" <? if ($_GET["error"] == 1) echo "value='Who are you?...'"?>><br>
+                    <input name="user" class="input" <? if (isset($_GET['error']) and $_GET['error'] == 1) echo "value='Who are you?...'"?>><br>
                 </td>
             <tr>
                 <td>
                     pass:
                 </td>
-                <td>    
+                <td>
                     <input name="pass" type="password" class="input"><br>
                 </td>
             </tr>
-                <td>
-                </td>
+                <td></td>
                 <td>
                     <input type="submit" value="login" class="input"><br>
                 </td>
             </tr>
         </table>
-        
+
     </form>
 
 </div>

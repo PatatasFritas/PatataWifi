@@ -1,18 +1,15 @@
 <?
-include "../config/config.php";
-include "../functions.php";
+include_once dirname(__FILE__)."/../config/config.php";
 
-// Checking POST & GET variables...
-if ($regex == 1) {
-    regex_standard($_GET["page"], "../msg.php", $regex_extra);
-    regex_standard($_GET["wait"], "../msg.php", $regex_extra);
-}
+require_once WWWPATH."includes/login_check.php";
+require_once WWWPATH."includes/filter_getpost.php";
+include_once WWWPATH."includes/functions.php";
 
-$page = $_GET["page"];
-$wait = $_GET["wait"];
+$page = @$_GET["page"];
+$wait = @$_GET["wait"];
 
 if ($page == "") {
-	$page = "../msg.php";
+	$page = WEBPATH."msg.php";
 }
 
 if ($wait == "") {
@@ -55,7 +52,7 @@ body {
 <pre>
 <?
 echo "Loading fruit...<br>";
-include "../wait_fruit.php";
+include WWWPATH."includes/wait_fruit.php";
 exit;
 ?>
 </pre>
