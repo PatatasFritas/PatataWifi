@@ -1,26 +1,15 @@
-<? 
-/*
-    Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
-?>
 <?
+include_once dirname(__FILE__)."/../config/config.php";
+
+require_once WWWPATH."includes/login_check.php";
+require_once WWWPATH."includes/filter_getpost.php";
+include_once WWWPATH."includes/functions.php";
 
 function execCurl($url) {
-    //$post_data = 'user=admin&pass=admin';
     $post_data = "";
+    $protocol = "http";
+    $srv_port = "8000";
+    $web_path = "";
     $agent = "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.7) Gecko/20100105 Shiretoko/3.5.7";
     $login_url = "$protocol://localhost$web_path/login.php";
 
@@ -37,9 +26,9 @@ function execCurl($url) {
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
     #curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt');
-    
+
     //curl_exec($ch);
-    
+
     //$url = "$protocol://localhost$web_path".$opt_responder[$tmp[$i]][3];
     curl_setopt($ch, CURLOPT_URL, $url);
     //print_r($ch);
@@ -47,10 +36,10 @@ function execCurl($url) {
 }
 
 
-$service = $_POST["service"];
+$service = @$_POST['service'];
 $service = str_replace("mod_", "", $service);
-$action = $_POST["action"];
-$page = $_POST["page"];
+$action = @$_POST['action'];
+$page = @$_POST['page'];
 
 
 $global_webserver = "http://localhost:".$_SERVER["SERVER_PORT"];
@@ -59,12 +48,12 @@ if ($service == "s_wireless") {
     $url = "$global_webserver/scripts/status_wireless.php?service=wireless&action=$action";
     execCurl($url);
     //return join(",", array("WIRELESS:$action"));
-              
+
 } else if ($service == "s_phishing") {
     $url = "$global_webserver/scripts/status_phishing.php?service=phishing&action=$action";
     execCurl($url);
     //return join(",", array("PHISHING:$action"));
-            
+
 } else {
     $url = "$global_webserver/modules/$service/includes/module_action.php?service=$service&action=$action&page=$page";
     execCurl($url);
@@ -75,7 +64,7 @@ if ($service == "s_wireless") {
 if ($action == "start") {
     $output[0] = "true";
 } else {
-    $output[0] = "false";    
+    $output[0] = "false";
 }
 echo json_encode($output);
 

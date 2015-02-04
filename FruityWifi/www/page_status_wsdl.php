@@ -1,25 +1,14 @@
-<? 
-/*
-    Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
+<?
+include_once "config/config.php";
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+require_once WWWPATH."includes/login_check.php";
+require_once WWWPATH."includes/filter_getpost.php";
+include_once WWWPATH."includes/functions.php";
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/ 
 ?>
 <!DOCTYPE html>
-<? include "login_check.php"; ?>
-<? include "config/config.php" ?>
-<? include "menu.php" ?>
+
+<? include_once WWWPATH."includes/menu.php"; ?>
 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 <script src="js/jquery.js"></script>
@@ -30,7 +19,7 @@
 //setEnableDisabled("wireless");
 //setEnableDisabled("supplicant");
 
-function setEnableDisable(operation, service, action) 
+function setEnableDisable(operation, service, action)
 {
     //setInterval(function() {
         $.ajax({
@@ -45,31 +34,31 @@ function setEnableDisable(operation, service, action)
                 console.log(data);
                 $('#output').html('');
                 $.each(data, function (index, value) {
-                    if (value == "true") 
+                    if (value == "true")
                     {
                         $("#"+service).html( "" );
                         $("#"+service).css( "color","lime" );
                         $("#"+service).css( "font-weight","bold" );
-                        
+
                         //$("#"+service+"-start").hide();
                         $("#"+service+"-stop").hide();
                         $("#"+service+"-start").css("visibility","hidden");
                         $("#"+service+"-stop").css("visibility","hidden");
-                        
+
                         //$("#"+service+"-loading").show();
-                        
+
                         $("#"+service).css( "text-align","center" );
                         $("#"+service).html( "<img src='img/loading.gif'>" );
-                        
+
                         //$("#"+service+"-stop").html("<img src='img/loading.gif'>");
                         setTimeout(function() {
                                 $("#"+service).css( "text-align","left" );
                                 //$("#"+service+"-loading").hide();
-                                
+
                                 $("#"+service+"-stop").show();
                                 $("#"+service+"-stop").css("visibility","visible");
                                 $("#"+service+"-start").hide();
-                                
+
                                 $("#"+service).html( "enabled" );
                         }, 2000);
                     }
@@ -78,18 +67,18 @@ function setEnableDisable(operation, service, action)
                         $("#"+service).html( "" );
                         $("#"+service).css( "color","red" );
                         $("#"+service).css( "font-weight","bold" );
-                        
+
                         //$("#"+service+"-stop").hide();
                         $("#"+service+"-start").hide();
                         $("#"+service+"-start").css("visibility","hidden");
                         $("#"+service+"-stop").css("visibility","hidden");
-                        
+
                         //$("#"+service+"-dummy").show();
                         //$("#"+service+"-loading").show();
-                        
+
                         $("#"+service).css( "text-align","center" );
                         $("#"+service).html( "<img src='img/loading.gif'>" );
-                        
+
                         //$("#"+service+"-stop").html("<img src='img/loading.gif'>");
                         //setTimeout(function() {$("#"+service+"-start").html("start");}, 2000);
                         setTimeout(function() {
@@ -98,7 +87,7 @@ function setEnableDisable(operation, service, action)
                                 $("#"+service+"-start").show();
                                 $("#"+service+"-start").css("visibility","visible");
                                 $("#"+service+"-stop").hide();
-                                
+
                                 $("#"+service).html( "disabled" );
                         }, 2000);
                     }
@@ -109,7 +98,7 @@ function setEnableDisable(operation, service, action)
 }
 
 
-function getStatus(operation, service) 
+function getStatus(operation, service)
 {
     var refInterval = setInterval(function() {
         $.ajax({
@@ -124,56 +113,56 @@ function getStatus(operation, service)
                 console.log(data);
                 $('#output').html('');
                 $.each(data, function (index, value) {
-                    if (value == "true") 
+                    if (value == "true")
                     {
                         if ( $("#"+service).html() == "disabled" ) {
-                          
+
                             $("#"+service).html( "" );
                             $("#"+service).css( "color","lime" );
                             $("#"+service).css( "font-weight","bold" );
-                            
+
                             $("#"+service+"-start").hide();
                             $("#"+service+"-stop").hide();
                             $("#"+service+"-start").css("visibility","hidden");
                             $("#"+service+"-stop").css("visibility","hidden");
-                            
+
                             $("#"+service).css( "text-align","center" );
                             ////$("#"+service).html( "<img src='img/loading.gif'>" );
-                            
+
                             setTimeout(function() {
                                     $("#"+service).css( "text-align","left" );
                                     //$("#"+service+"-loading").hide();
 
                                     $("#"+service+"-stop").show();
                                     $("#"+service+"-stop").css("visibility","visible");
-                    
+
                                     $("#"+service).html( "enabled" );
                             }, 0);
                         }
                     }
-                    else 
+                    else
                     {
                         if ( $("#"+service).html() == "enabled" ) {
                             $("#"+service).html( "" );
                             $("#"+service).css( "color","red" );
                             $("#"+service).css( "font-weight","bold" );
-                            
+
                             $("#"+service+"-stop").hide();
                             $("#"+service+"-start").hide();
                             $("#"+service+"-start").css("visibility","hidden");
                             $("#"+service+"-stop").css("visibility","hidden");
                             //$("#"+service+"-dummy").css("visibility","visible");
-                            
+
                             $("#"+service).css( "text-align","center" );
                             ////$("#"+service).html( "<img src='img/loading.gif'>" );
-                            
+
                             setTimeout(function() {
                                     $("#"+service).css( "text-align","left" );
                                     //$("#"+service+"-loading").hide();
-                                    
+
                                     $("#"+service+"-start").show();
                                     $("#"+service+"-start").css("visibility","visible");
-                                    
+
                                     $("#"+service).html( "disabled" );
                             }, 0);
                         }
@@ -186,8 +175,8 @@ function getStatus(operation, service)
 }
 
 
-function getStatusInit(operation, service) 
-{	
+function getStatusInit(operation, service)
+{
     //setInterval(function() {
         $.ajax({
             type: 'POST',
@@ -201,27 +190,27 @@ function getStatusInit(operation, service)
                 //console.log(data);
                 $('#output').html('');
                 $.each(data, function (index, value) {
-                    if (value == "true") 
+                    if (value == "true")
                     {
                         $("#"+service).html( "" );
                         $("#"+service).css( "color","lime" );
                         $("#"+service).css( "font-weight","bold" );
-                        
+
                         $("#"+service+"-start").hide();
                         $("#"+service+"-stop").hide();
                         $("#"+service+"-start").css("visibility","hidden");
                         $("#"+service+"-stop").css("visibility","hidden");
-                        
+
                         $("#"+service).css( "text-align","center" );
                         ////$("#"+service).html( "<img src='img/loading.gif'>" );
-                        
+
                         setTimeout(function() {
                                 $("#"+service).css( "text-align","left" );
                                 //$("#"+service+"-loading").hide();
 
                                 $("#"+service+"-stop").show();
                                 $("#"+service+"-stop").css("visibility","visible");
-                
+
                                 $("#"+service).html( "enabled" );
                         }, 0);
                     }
@@ -230,23 +219,23 @@ function getStatusInit(operation, service)
                         $("#"+service).html( "" );
                         $("#"+service).css( "color","red" );
                         $("#"+service).css( "font-weight","bold" );
-                        
+
                         $("#"+service+"-stop").hide();
                         $("#"+service+"-start").hide();
                         $("#"+service+"-start").css("visibility","hidden");
                         $("#"+service+"-stop").css("visibility","hidden");
                         //$("#"+service+"-dummy").css("visibility","visible");
-                        
+
                         $("#"+service).css( "text-align","center" );
                         ////$("#"+service).html( "<img src='img/loading.gif'>" );
-                        
+
                         setTimeout(function() {
                                 $("#"+service).css( "text-align","left" );
                                 //$("#"+service+"-loading").hide();
-                                
+
                                 $("#"+service+"-start").show();
                                 $("#"+service+"-start").css("visibility","visible");
-                                
+
                                 $("#"+service).html( "disabled" );
                         }, 0);
                     }
@@ -263,15 +252,14 @@ function getStatusInit(operation, service)
 <div style="b-order:1px solid; width: 410px; display:inline-block; vertical-align: top;">
 
 <?
-include "functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
-    regex_standard($_GET['service'], "msg.php", $regex_extra);
-    regex_standard($_GET['action'], "msg.php", $regex_extra);
+    @regex_standard($_GET['service'], "msg.php", $regex_extra);
+    @regex_standard($_GET['action'], "msg.php", $regex_extra);
 }
-$service = $_GET['service'];
-$action = $_GET['action'];
+$service = @$_GET['service'];
+$action = @$_GET['action'];
 
 ?>
 
@@ -284,36 +272,36 @@ function addDivs($service, $alias, $edit, $path, $mod_logs_panel)
     } else {
         $visibility = "";
     }
-    
+
     echo "
             <div style='text-align:left;'>
-                <div style='border:0px solid red; display:inline-block; width:80px; text-align:right;'>$alias</div>
-        
-                <div name='$service' id='$service' style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div>
-                <div style='border:0px solid red; display:inline-block;'>|</div>
-                
+                <div style='border:0px; display:inline-block; width:80px; text-align:right;'>$alias</div>
+
+                <div name='$service' id='$service' style='border:0px; display:inline-block; width:63px; font-weight:bold; color:blue;'>...</div>
+                <div style='border:0px; display:inline-block;'>|</div>
+
                 <div id='$service-start' style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                     <a href='#' onclick=\"setEnableDisable('serviceAction','$service','start')\">start</a>
                 </div>
                 <div id='$service-stop' style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                     <a href='#' onclick=\"setEnableDisable('serviceAction','$service','stop')\">stop</a>
                 </div>
-                
+
                 <div id='$service-loading' style='display:inline-block;'>
                     <img src='img/loading.gif'>
                 </div>
-                
-                <div style='border:0px solid red; display:inline-block;'>|</div>
+
+                <div style='border:0px; display:inline-block;'>|</div>
                 <div id='$service-stop' style='display:inline-block;font-weight:bold; width:36px;'>
                     <a href='$edit'>edit</a>
                 </div>
-                
-                <div style='border:0px solid red; display:inline-block;'>|</div>
+
+                <div style='border:0px; display:inline-block;'>|</div>
                 <div id='$service-logOn' style='display:inline-block;$visibility'><a href='#' onclick=\"getLogs('$service', '$path')\">log</a></div>
                 <div id='$service-logOff' style='display:inline-block;visibility:hidden;'><a href='#' onclick=\"removeLogs('$service')\">off</a></div>
                 <div style='display:inline-block;' id='i_$service'></div>
                 <div style='display:inline-block;visibility:hidden;' id='i_status_$service'></div>
-                
+
                 <script>
                     //getEnableDisabled('$service')
                     getStatusInit('getStatus','$service');
@@ -329,8 +317,8 @@ function addDivs($service, $alias, $edit, $path, $mod_logs_panel)
                 });
                 </script>
             </div>
-        
-        ";	
+
+        ";
 }
 
 ?>
@@ -338,8 +326,8 @@ function addDivs($service, $alias, $edit, $path, $mod_logs_panel)
 <div class="rounded-top" align="center"> Services </div>
 <div class="rounded-bottom">
 
-<? 
-addDivs("s_wireless", "Wireless", "page_config.php", "../logs/dnsmasq.log", "show");
+<?
+addDivs("s_wireless", "Wireless", "page_config.php", "dnsmasq.log", "show");
 ?>
 
 <?
@@ -349,19 +337,19 @@ if (count($output) > 0) {
     <table border=0 width='100%' cellspacing=0 cellpadding=0>
     <?
     for ($i=0; $i < count($output); $i++) {
-	$mod_type = ""; // checks if module is a service
+		$mod_type = ""; // checks if module is a service
         include $output[$i];
         $module_path = str_replace("_info_.php","",$output[$i]);
-        
+
         if ($mod_panel == "show" and $mod_type == "service") {
-		
-            addDivs("mod_$mod_name", "$mod_alias", "modules/$mod_name/", "$mod_logs", "$mod_logs_panel");
-            
+
+            addDivs("mod_$mod_name", "$mod_alias", "modules/$mod_name/", "$mod_name.log", "$mod_logs_panel");
+
             $mod_panel = "";
             $mod_alias = "";
-			
+
         }
-    
+
         $mod_logs_panel = "";
         $mod_installed[$i] = $mod_name;
     }
@@ -393,21 +381,21 @@ if (count($output) > 0) {
     //print_r($output[0]);
 
     for ($i=0; $i < count($output); $i++) {
-	$mod_type = ""; // checks if module is a service
+		$mod_type = ""; // checks if module is a module
         include $output[$i];
         $module_path = str_replace("_info_.php","",$output[$i]);
-        
+
         if ($mod_panel == "show" and $mod_type != "service") {
-		
-            addDivs("mod_$mod_name", "$mod_alias", "modules/$mod_name/", "$mod_logs", "$mod_logs_panel");
-            
+
+            addDivs("mod_$mod_name", "$mod_alias", "modules/$mod_name/", "$mod_name.log", "$mod_logs_panel");
+
             $mod_panel = "";
             $mod_alias = "";
-		
+
 /*
         echo "<tr>";
             echo "<td align='right' style='padding-right:5px; padding-left:5px; padding-bottom:1px; width:10px' nowrap>";
-            if ($mod_alias != "") { 
+            if ($mod_alias != "") {
                 echo $mod_alias;
             } else {
                 echo $mod_name;
@@ -418,10 +406,10 @@ if (count($output) > 0) {
                 $isModuleUp = exec($mod_isup);
                 if ($isModuleUp != "") {
                     echo "<font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'><b>stop</b></a>";
-                    echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>"; 
-                } else { 
-                    echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>"; 
-                    echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>"; 
+                    echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>";
+                } else {
+                    echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>";
+                    echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>";
                 }
             $mod_panel = "";
             $mod_alias = "";
@@ -430,14 +418,14 @@ if (count($output) > 0) {
         echo "</tr>";
 */
         }
-        
+
         $mod_logs_panel = "";
         $mod_installed[$i] = $mod_name;
     }
     ?>
     </table>
 
-<? 
+<?
 } else {
 echo "<div>No modules have been installed.<br>Install them from the <a href='page_modules.php'><b>Available Modules</b></a> list.</div>";
 }
@@ -463,7 +451,7 @@ $ifaces = explode("|", $ifaces);
         }
     }
 
-if ($_GET['reveal_public_ip'] == 1) {
+if (isset($_GET['reveal_public_ip']) and $_GET['reveal_public_ip'] == 1) {
 	echo "public: " . exec("curl ident.me");
 } else {
 	echo "public: <a href='page_status.php?reveal_public_ip=1'>reveal ip</a>";

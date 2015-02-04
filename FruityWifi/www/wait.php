@@ -33,7 +33,7 @@ body {
 <pre>
 <?
 echo "Loading fruit...<br>";
-include "wait_fruit.php";
+include "includes/wait_fruit.php";
 ?>
 </pre>
 
