@@ -1,19 +1,9 @@
 <?
 include_once dirname(__FILE__)."/../config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
-
-// Checking POST & GET variables [regex]...
-if ($regex == 1) {
-    regex_standard($_POST['iface'], "../msg.php", $regex_extra);
-    regex_standard($_POST['io_out_iface'], "../msg.php", $regex_extra);
-    regex_standard($_POST['io_in_iface'], "../msg.php", $regex_extra);
-    regex_standard($_POST['io_in_iface_extra'], "../msg.php", $regex_extra);
-    regex_standard($_POST['wifi_supplicant'], "../msg.php", $regex_extra);
-    regex_standard($_POST['ap_mode'], "../msg.php", $regex_extra);
-}
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
 
 // ------------ IN | OUT (START) -------------
@@ -194,6 +184,6 @@ if(isset($_POST['domain'])) {
     exec_fruitywifi($exec);
 }
 
-header('Location: ../page_config_adv.php');
+header('Location: ../page_config.php');
 
 ?>

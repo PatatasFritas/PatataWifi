@@ -1,9 +1,9 @@
 <?
 include_once dirname(__FILE__)."/../config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-//include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+//include_once WWWPATH."/includes/functions.php";
 
 exec("/sbin/iw dev $io_in_iface station dump |grep Stat", $stations);
 for ($i=0; $i < count($stations); $i++) {

@@ -215,12 +215,15 @@ echo "| Config log path              |"
 echo "+------------------------------+"
 
 mkdir -p -v $fruitywifi_log_path
-EXEC="s,^\$log_path=.*,\$log_path=\""$fruitywifi_log_path"\";,g"
-sed -i $EXEC FruityWifi/www/config/config.php
+
+sed -i "s,'LOGPATH'\, \".*\",'LOGPATH'\, \"$fruitywifi_log_path\",g" FruityWifi/www/config/config.php
+
 EXEC="s,^log-facility=.*,log-facility="$fruitywifi_log_path"/dnsmasq.log,g"
 sed -i $EXEC FruityWifi/conf/dnsmasq.conf
+
 EXEC="s,^dhcp-leasefile=.*,dhcp-leasefile="$fruitywifi_log_path"/dhcp.leases,g"
 sed -i $EXEC FruityWifi/conf/dnsmasq.conf
+
 EXEC="s,^Defaults logfile =.*,Defaults logfile = "$fruitywifi_log_path"/sudo.log,g"
 sed -i $EXEC sudo-setup/fruitywifi
 
@@ -238,8 +241,12 @@ echo
 
 mkdir -v -p /usr/share/fruitywifi/
 cp -a ./FruityWifi/* /usr/share/fruitywifi/
-#ln -s $fruitywifi_log_path /usr/share/fruitywifi/www/logs
+#ln -s $fruitywifi_log_path /usr/share/FruityWifiwww/logs
 #ln -s /usr/share/fruitywifi/ /usr/share/FruityWifi
+
+# Change Permissions
+chown -R fruitywifi:fruitywifi /usr/share/fruitywifi
+chown -R fruitywifi:fruitywifi $log_path
 
 echo
 
@@ -256,8 +263,9 @@ update-rc.d ntp defaults
 /etc/init.d/php5-fpm restart
 
 
-#apt-get -y remove ifplugd
-update-rc.d ifplugd disable 2 3 4 5
+apt-get -y remove ifplugd
+#update-rc.d ifplugd disable 2 3 4 5
+#service ifplugd stop
 
 echo
 

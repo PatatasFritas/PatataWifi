@@ -1,11 +1,11 @@
 <?
 include_once "config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
-include_once WWWPATH."includes/menu.php";
+include_once WWWPATH."/includes/menu.php";
 ?>
 
 <meta name="viewport" content="initial-scale=0.50, width=device-width" />
@@ -16,10 +16,10 @@ function addDivs($service, $alias, $edit, $path)
 {
     echo "
         <div style='text-align:left;'>
-            <div style='border:0px solid red; display:inline-block; width:80px; text-align:right;'>$alias</div>
+            <div style='border:0px; display:inline-block; width:80px; text-align:right;'>$alias</div>
 
-            <div name='$service' id='$service' style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div>
-            <div style='border:0px solid red; display:inline-block;'>|</div>
+            <div name='$service' id='$service' style='border:0px; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div>
+            <div style='border:0px; display:inline-block;'>|</div>
 
             <div id='$service-start' style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                     <a href='#' onclick=\"setEnableDisable('serviceAction','$service','start')\">start</a>
@@ -32,12 +32,12 @@ function addDivs($service, $alias, $edit, $path)
                     <img src='img/loading.gif'>
             </div>
 
-            <div style='border:0px solid red; display:inline-block;'>|</div>
+            <div style='border:0px; display:inline-block;'>|</div>
             <div id='$service-stop' style='display:inline-block;font-weight:bold; width:36px;'>
                     <a href='$edit'>edit</a>
             </div>
 
-            <div style='border:0px solid red; display:inline-block;'>|</div>
+            <div style='border:0px; display:inline-block;'>|</div>
             <div id='$service-logOn' style='display:inline-block;'><a href='#' onclick=\"getLogs('$service', '$path')\">log</a></div>
             <div id='$service-logOff' style='display:inline-block;visibility:hidden;'><a href='#' onclick=\"removeLogs('$service')\">off</a></div>
             <div style='display:inline-block;' id='i_$service'></div>
@@ -92,21 +92,23 @@ if ($ap_mode == "1") {
 	$iswlanup = exec("ps auxww | grep hostapd | grep -v -e grep");
 }
 
+$hostapd_modes = array(1 => "Hostapd", 3 => "Hostapd-Mana", 4 => "Hostapd-Karma", 2 => "Airmon-ng");
+
 echo "<div style='text-align:left;'>";
-//echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
-echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>".$hostapd_modes[$ap_mode]."</div> ";
+//echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
+echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>Wireless<br/>".$hostapd_modes[$ap_mode]."</div> ";
 if ($iswlanup != "") {
 
-    echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
-    echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+    echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
+    echo "<div style='border:0px; display:inline-block;'>|</div> ";
 
     echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                 <a href='scripts/status_wireless.php?service=wireless&action=stop' class='div-a'>stop</a>
             </div>";
 } else {
 
-    echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
-    echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+    echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
+    echo "<div style='border:0px; display:inline-block;'>|</div> ";
 
     echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                 <a href='scripts/status_wireless.php?service=wireless&action=start' class='div-a'>start</a>
@@ -135,26 +137,27 @@ if (count($output) > 0) {
                     //echo "<td class='rounded-bottom-body' align='right' s-tyle='padding-right:5px; padding-left:5px; padding-bottom:1px; width:10px; color: #445257;' nowrap>";
                     if ($mod_alias != "") {
                         //echo $mod_alias;
-                        echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
+                        echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
                     } else {
                         //echo $mod_name;
-                        echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_name</div> ";
+                        echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_name</div> ";
                     }
                     //echo "</td>";
                     //echo "<td align='left' style='padding-right:5px; padding-left:5px; ' nowrap>";
                     if ($mod_panel == "show") {
+                        if($mod_isup != "") {
                         $isModuleUp = exec($mod_isup);
                         if ($isModuleUp != "") {
                             //echo "<font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'><b>stop</b></a>";
                             //echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>";
 
-                            echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
-                            echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+                            echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
+                            echo "<div style='border:0px; display:inline-block;'>|</div> ";
                             echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                                         <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'>stop</a>
                                     </div>";
 
-                            echo "<div style='border:0px solid red; display:inline-block;'>|</div>
+                            echo "<div style='border:0px; display:inline-block;'>|</div>
                                     <div style='display:inline-block;font-weight:bold; width:36px;'>
                                         <a href='modules/$mod_name/'>view</a>
                                     </div>";
@@ -163,20 +166,29 @@ if (count($output) > 0) {
                             //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>";
                             //echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>";
 
-                            echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
-                            echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+                            echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
+                            echo "<div style='border:0px; display:inline-block;'>|</div> ";
                             echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
                                         <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'>start</a>
                                     </div>";
 
-                            echo "<div style='border:0px solid red; display:inline-block;'>|</div>
+                            echo "<div style='border:0px; display:inline-block;'>|</div>
                                     <div style='display:inline-block;font-weight:bold; width:36px;'>
                                         <a href='modules/$mod_name/'>edit</a>
                                     </div>";
                         }
                         $mod_panel = "";
                         $mod_alias = "";
+                    } else {
+                        echo "<div style='border:0px; display:inline-block; width:63px;'></div> ";
+                        echo "<div style='border:0px; display:inline-block;'>|</div> ";
+                        echo "<div style='display:inline-block;width:36px;'></div>";
+                        echo "<div style='border:0px; display:inline-block;'>|</div>
+                                <div style='display:inline-block;font-weight:bold; width:36px;'>
+                                    <a href='modules/$mod_name/'>edit</a>
+                                </div>";
                     }
+                }
                     //echo "</td>";
                     //echo "</tr>";
                 }
@@ -223,26 +235,27 @@ if (count($output) > 0) {
                         //echo "<td class='rounded-bottom-body' align='right' s-tyle='padding-right:5px; padding-left:5px; padding-bottom:1px; width:10px; color: #445257;' nowrap>";
                         if ($mod_alias != "") {
                         //    echo $mod_alias;
-			    echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
+			    echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
                         } else {
                             //echo $mod_name;
-			    echo "<div style='border:0px solid red; display:inline-block; width:84px; text-align:right;'>$mod_name</div> ";
+			    echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_name</div> ";
                         }
                         //echo "</td>";
                         //echo "<td align='left' style='padding-right:5px; padding-left:5px; ' nowrap>";
                         if ($mod_panel == "show") {
+                            if($mod_isup != "") {
                             $isModuleUp = exec($mod_isup);
                             if ($isModuleUp != "") {
                                 //echo "<font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'><b>stop</b></a>";
                                 //echo "&nbsp; | <a href='modules/$mod_name/'><b>view</b></a><br/>";
 
-				echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
-				echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+				echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div> ";
+				echo "<div style='border:0px; display:inline-block;'>|</div> ";
 				echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
 					    <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=stop&page=status'>stop</a>
 					</div>";
 
-				echo "<div style='border:0px solid red; display:inline-block;'>|</div>
+				echo "<div style='border:0px; display:inline-block;'>|</div>
 					<div style='display:inline-block;font-weight:bold; width:36px;'>
 					    <a href='modules/$mod_name/'>view</a>
 					</div>";
@@ -251,18 +264,27 @@ if (count($output) > 0) {
                                 //echo "<font color=\"red\"><b>disabled</b></font>. | <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'><b>start</b></a>";
                                 //echo " | <a href='modules/$mod_name/'><b>edit</b></a><br/>";
 
-				echo "<div style='border:0px solid red; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
-				echo "<div style='border:0px solid red; display:inline-block;'>|</div> ";
+				echo "<div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div> ";
+				echo "<div style='border:0px; display:inline-block;'>|</div> ";
 				echo "<div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
 					    <a href='modules/$mod_name/includes/module_action.php?service=$mod_name&action=start&page=status'>start</a>
 					</div>";
 
-				echo "<div style='border:0px solid red; display:inline-block;'>|</div>
+				echo "<div style='border:0px; display:inline-block;'>|</div>
 					<div style='display:inline-block;font-weight:bold; width:36px;'>
 					    <a href='modules/$mod_name/'>edit</a>
 					</div>";
 
                             }
+                        } else {
+                            echo "<div style='border:0px; display:inline-block; width:63px;'></div> ";
+                            echo "<div style='border:0px; display:inline-block;'>|</div> ";
+                            echo "<div style='display:inline-block;width:36px;'></div>";
+                            echo "<div style='border:0px; display:inline-block;'>|</div>
+                                <div style='display:inline-block;font-weight:bold; width:36px;'>
+                                    <a href='modules/$mod_name/'>edit</a>
+                                </div>";
+                        }
                         $mod_panel = "";
                         $mod_alias = "";
                         }
@@ -373,4 +395,3 @@ if (count($output) > 0) {
 
 	?>
 </div>
-

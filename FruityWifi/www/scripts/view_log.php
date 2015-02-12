@@ -1,9 +1,12 @@
 <link href="../style.css" rel="stylesheet" type="text/css">
 <pre>
 <?
-include "../login_check.php";
-include "../config/config.php";
-include "../functions.php";
+include_once dirname(__FILE__)."/../../../config/config.php";
+include_once dirname(__FILE__)."/../_info_.php";
+
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
 // Checking POST & GET variables...
 if ($regex == 1) {
@@ -18,11 +21,9 @@ function load_file ($filename) {
     return $data;
 }
 
-$module = $_GET['module'];
-$file = $_GET['file'];
-
-if ($module == "sslstrip") {
+if (isset($_GET['module']) and $_GET['module'] == "sslstrip" and isset($_GET['file'])) {
     //echo $file.".log";
+    $file = $_GET['file']
     $data = load_file("../logs/sslstrip/".$file.".log");
     echo $data;
 }

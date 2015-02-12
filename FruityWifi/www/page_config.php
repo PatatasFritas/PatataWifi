@@ -1,13 +1,13 @@
 <?
 include_once "config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 ?>
 <!DOCTYPE html>
 <link href="css/style.css" rel="stylesheet" type="text/css">
-<? include_once WWWPATH."includes/menu.php"; ?>
+<? include_once WWWPATH."/includes/menu.php"; ?>
 <m-eta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 <script src="js/jquery.js"></script>
@@ -81,44 +81,35 @@ if(isset($_POST['newSSID'])){
 
     $hostapd_ssid=$_POST['newSSID'];
 
-    $exec = "sed -i 's/hostapd_ssid=.*/hostapd_ssid=\\\"".$_POST['newSSID']."\\\";/g' ./config/config.php";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/hostapd_ssid=.*/hostapd_ssid=\\\"".$_POST['newSSID']."\\\";/g' ./config/config.php");
 
-    $exec = "/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid $_POST[newSSID]";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid $_POST[newSSID]");
 
     // replace interface in hostapd.conf and hostapd-secure.conf
-    $exec = "/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd.conf";
-    exec_fruitywifi($exec);
-    $exec = "/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd-secure.conf";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd.conf");
+    exec_fruitywifi("/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd-secure.conf");
 }
 
 
 if (isset($_POST['hostapd_secure'])) {
-    $exec = "sed -i 's/hostapd_secure=.*/hostapd_secure=\\\"".$_POST['hostapd_secure']."\\\";/g' ./config/config.php";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/hostapd_secure=.*/hostapd_secure=\\\"".$_POST['hostapd_secure']."\\\";/g' ./config/config.php");
 
     $hostapd_secure = $_POST['hostapd_secure'];
 }
 
 if (isset($_POST['hostapd_wpa_passphrase'])) {
-    $exec = "sed -i 's/hostapd_wpa_passphrase=.*/hostapd_wpa_passphrase=\\\"".$_POST['hostapd_wpa_passphrase']."\\\";/g' ./config/config.php";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/hostapd_wpa_passphrase=.*/hostapd_wpa_passphrase=\\\"".$_POST['hostapd_wpa_passphrase']."\\\";/g' ./config/config.php");
 
-    $exec = "sed -i 's/wpa_passphrase=.*/wpa_passphrase=".$_POST['hostapd_wpa_passphrase']."/g' ../conf/hostapd-secure.conf";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/wpa_passphrase=.*/wpa_passphrase=".$_POST['hostapd_wpa_passphrase']."/g' ../conf/hostapd-secure.conf");
 
     $hostapd_wpa_passphrase = $_POST['hostapd_wpa_passphrase'];
 }
 
 //! -------------- SUPPLICANT ------------------
 if(isset($_POST['supplicant_ssid']) and isset($_POST['supplicant_psk'])) {
-    $exec = "sed -i 's/supplicant_ssid=.*/supplicant_ssid=\\\"".$_POST['supplicant_ssid']."\\\";/g' ./config/config.php";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/supplicant_ssid=.*/supplicant_ssid=\\\"".$_POST['supplicant_ssid']."\\\";/g' ./config/config.php");
 
-    $exec = "sed -i 's/supplicant_psk=.*/supplicant_psk=\\\"".$_POST['supplicant_psk']."\\\";/g' ./config/config.php";
-    exec_fruitywifi($exec);
+    exec_fruitywifi("sed -i 's/supplicant_psk=.*/supplicant_psk=\\\"".$_POST['supplicant_psk']."\\\";/g' ./config/config.php");
 
     $supplicant_ssid = $_POST['supplicant_ssid'];
     $supplicant_psk = $_POST['supplicant_psk'];
@@ -127,11 +118,10 @@ if(isset($_POST['supplicant_ssid']) and isset($_POST['supplicant_psk'])) {
 //! -------------- PASSWORD ------------------
 $pass_msg = 0;
 if(isset($_POST['pass_old']) and isset($_POST['pass_new']) and isset($_POST['pass_new_repeat'])) {
-    include WWWPATH."includes/users.php";
-    if ( ($users['admin'] == md5($salt.$_POST['pass_old'])) and ($_POST['pass_new'] == $_POST['pass_new_repeat'])) {
-		$exec = "sed -i 's/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_old'])."\\\"/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_new'])."\\\"/g' ./users.php";
+    include WWWPATH."/includes/users.php";
+    if ( ($users['admin'] == md5(PASSWORDSALT.$_POST['pass_old'])) and ($_POST['pass_new'] == $_POST['pass_new_repeat'])) {
 
-	    exec_fruitywifi($exec);
+	    exec_fruitywifi("sed -i 's/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_old'])."\\\"/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_new'])."\\\"/g' ./users.php");
 
 	    $pass_msg = 1;
     } else {
@@ -177,18 +167,11 @@ $ifaces = explode("|", $ifaces);
 	    <form action="scripts/config_iface.php" method="post" style="margin:0px">
 	    &nbsp;[AP]
 	    <select class="input" onchange="this.form.submit()" name="ap_mode">
-		<?
-			foreach ($hostapd_modes as $mode => $modetxt) {
-				echo '<option value="'.$mode.'"';
-				if ($ap_mode == $mode) echo ' selected="selected" ';
-				echo '>'.$modetxt.'</option>';
-			}
-		?>
-
-		<? if (file_exists("/usr/share/FruityWifi/www/modules/mana/includes/hostapd")) { ?>
+        <option value="1" <? if ($ap_mode == 1) echo "selected"?> >Hostapd</option>
+		<? if (file_exists("/usr/share/fruitywifi/www/modules/mana/includes/hostapd")) { ?>
 		<option value="3" <? if ($ap_mode == 3) echo "selected"?> >Hostapd-Mana</option>
 		<? } ?>
-		<? if (file_exists("/usr/share/FruityWifi/www/modules/karma/includes/hostapd")) { ?>
+		<? if (file_exists("/usr/share/fruitywifi/www/modules/karma/includes/hostapd")) { ?>
 		<option value="4" <? if ($ap_mode == 4) echo "selected"?> >Hostapd-Karma</option>
 		<? } ?>
 		<option value="2" <? if ($ap_mode == 2) echo "selected"?> >Airmon-ng</option>
@@ -261,9 +244,9 @@ $ifaces = explode("|", $ifaces);
 			    $tmp_ip = exec("/sbin/ifconfig $io_in_iface | grep 'inet addr:' | cut -d: -f2 |awk '{print $1}'");
 
 			    if (trim($tmp_ip) == trim($io_in_ip)) {
-				echo "<a href='page_config_adv.php?service=io_in&action=stop'><b>stop</b></a> [<font color='lime'>on</font>]";
+				echo "<a href='page_config.php?service=io_in&action=stop'><b>stop</b></a> [<font color='lime'>on</font>]";
 			    } else {
-				echo "<a href='page_config_adv.php?service=io_in&action=start'><b>start</b></a> [<font color='red'>off</font>]";
+				echo "<a href='page_config.php?service=io_in&action=start'><b>start</b></a> [<font color='red'>off</font>]";
 			    }
 
 			    ?>
@@ -336,9 +319,9 @@ $ifaces = explode("|", $ifaces);
 			    $tmp_ip = exec("/sbin/ifconfig $io_out_iface | grep 'inet addr:' | cut -d: -f2 |awk '{print $1}'");
 
 			    if (trim($tmp_ip) == trim($io_out_ip)) {
-			        echo "<a href='page_config_adv.php?service=io_out&action=stop'><b>stop</b></a> [<font color='lime'>on</font>]";
+			        echo "<a href='page_config.php?service=io_out&action=stop'><b>stop</b></a> [<font color='lime'>on</font>]";
 			    } else {
-				echo "<a href='page_config_adv.php?service=io_out&action=start'><b>start</b></a> [<font color='red'>off</font>]";
+				    echo "<a href='page_config.php?service=io_out&action=start'><b>start</b></a> [<font color='red'>off</font>]";
 			    }
 
 			    ?>
@@ -402,9 +385,9 @@ $ifaces = explode("|", $ifaces);
     <img src="img/help-browser.png" title="Use this interface for extra features like Kismet, MDK3, etc..." width=14>
     <?
         if ($iface_mon0 == "") {
-            echo "<b><a href='page_config_adv.php?service=mon0&action=start'>start</a></b> [<font color='red'>mon0</font>]";
+            echo "<b><a href='page_config.php?service=mon0&action=start'>start</a></b> [<font color='red'>mon0</font>]";
         } else {
-            echo "<b><a href='page_config_adv.php?service=mon0&action=stop'>stop</a></b>&nbsp; [<font color='lime'>mon0</font>]";
+            echo "<b><a href='page_config.php?service=mon0&action=stop'>stop</a></b>&nbsp; [<font color='lime'>mon0</font>]";
         }
         //echo "(kismet, mdk3, etc)";
     ?>

@@ -3,19 +3,19 @@ include_once dirname(__FILE__)."/config/config.php";
 //Redirect logged users
 session_start();
 if (isset($_SESSION['user_id'])) {
-    header('Location: '.WEBPATH.'page_status.php');
+    header('Location: '.WEBPATH.'/page_status.php');
     exit;
 }
 ?>
-<link href="<?=WEBPATH?>css/style.css" rel="stylesheet" type="text/css">
-<link rel="icon" type="image/x-icon" href="<?=WEBPATH?>img/favicon.ico"/>
+<link href="<?=WEBPATH?>/css/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" type="image/x-icon" href="<?=WEBPATH?>/img/favicon.ico"/>
 
 <div class="menu-bc" s-tyle="background-color: #576971;">
 	<table>
 		<tr>
 			<td>
 				<div class="m-enu">
-				<img src="<?=WEBPATH?>img/logo.png" width=32><img style="padding-left:2px; padding-top:0px;" src="<?=WEBPATH?>img/logo-fw.png">
+				<img src="<?=WEBPATH?>/img/logo.png" width=32><img style="padding-left:2px; padding-top:0px;" src="<?=WEBPATH?>/img/logo-fw.png">
 				</div>
 			</td>
 			<td>
@@ -25,7 +25,7 @@ if (isset($_SESSION['user_id'])) {
 	</table>
 </div>
 
-<i-mg src="<?=WEBPATH?>img/logo.png">
+<i-mg src="<?=WEBPATH?>/img/logo.png">
 
 <br><br>
 

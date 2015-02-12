@@ -1,19 +1,20 @@
 <?
 include_once dirname(__FILE__)."/../config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
-$page = @$_GET["page"];
-$wait = @$_GET["wait"];
-
-if ($page == "") {
-	$page = WEBPATH."msg.php";
+if (isset($_GET['page']) and $_GET['page'] != "") {
+	$page = $_GET['page'];
+} else {
+	$page = WEBPATH."/msg.php";
 }
 
-if ($wait == "") {
-	$wait = 1;
+if (isset($_GET['wait']) and is_numeric($_GET['wait'])) {
+	 $wait = $_GET['wait'];
+} else {
+    $wait = 1;
 }
 
 ?>
@@ -52,7 +53,7 @@ body {
 <pre>
 <?
 echo "Loading fruit...<br>";
-include WWWPATH."includes/wait_fruit.php";
+include WWWPATH."/includes/wait_fruit.php";
 exit;
 ?>
 </pre>

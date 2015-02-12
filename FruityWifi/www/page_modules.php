@@ -1,21 +1,17 @@
 <?
-//Pendiente de revisar
+include_once dirname(__FILE__)."/config/config.php";
 
-include_once "config/config.php";
-
-require_once WWWPATH."includes/login_check.php";
-//require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
 ?>
 <!doctype html>
 
-<l-ink rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<s-cript src="//code.jquery.com/jquery-1.10.2.js"></script>
-<s-cript src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="css/jquery-ui.css">
-<script src="js/jquery.js"></script>
-<script src="js/jquery-ui.js"></script>
+<script src="<?=WEBPATH?>/js/jquery.js"></script>
+<script src="<?=WEBPATH?>/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="<?=WEBPATH?>/css/jquery-ui.css" />
+<link rel="stylesheet" href="<?=WEBPATH?>/css/style.css" />
 <script>
 function openDialog(action, module, version) {
   $(function() {
@@ -37,7 +33,7 @@ function openDialog(action, module, version) {
 }
 </script>
 
-<? include_once WWWPATH."includes/menu.php"; ?>
+<? include_once WWWPATH."/includes/menu.php"; ?>
 
 <div id="dialog" title="Wait" style="vertical-align: middle; text-align: center; visibility: hidden"></div>
 <div id="data" title="Basic dialog" style="visibility: hidden"></div>
@@ -117,6 +113,8 @@ if (count($output) > 0) {
 <br>
 
 <? } ?>
+
+
 
 <div class="rounded-top" align="center"> Available Modules </div>
 <div class="rounded-bottom">

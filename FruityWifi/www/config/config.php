@@ -1,21 +1,16 @@
 <?
-$version="v2.1.2";
+$version="v2.1.2x";
 
 define('FWPATH', "/usr/share/fruitywifi/"); // Path of fruitywifi
 define('WWWPATH', "/usr/share/fruitywifi/www/");
-define('LOGPATH', "/usr/share/fruitywifi/logs/");
-$log_path = FWPATH."logs/";
+define('LOGPATH', "/usr/share/fruitywifi/logs");
+$log_path = LOGPATH;
 
-define('WEBPATH', "/");
-
-
+define('WEBPATH', "");
 define('PASSWORDSALT', "FruityWifi");
 
 $regex=1; // 1 (on) | 0 (off) >> web interface input validation.
 $regex_extra=" _-.[]*"; // extra characters allowed (input validation).
-
-// move this to wireless page
-$hostapd_modes = array(1 => "Hostapd", 3 => "Hostapd-Mana", 4 => "Hostapd-Karma", 2 => "Airmon-ng");
 
 // Config
 $io_in_iface_extra="-";
@@ -70,5 +65,30 @@ $bin_dos2unix = "/usr/bin/dos2unix";
 $bin_mv = "/bin/mv";
 $bin_touch = "/bin/touch";
 $bin_python = "/usr/bin/python";
+
+@define('BIN_SUDO', "/usr/bin/sudo");
+@define('BIN_ECHO', "/bin/echo");
+@define('BIN_CP', "/bin/cp");
+@define('BIN_KILLALL', "/usr/bin/killall");
+@define('BIN_MKDIR', "/bin/mkdir");
+@define('BIN_CHOWN', "/bin/chown");
+@define('BIN_CHMOD', "/bin/chmod");
+@define('BIN_IPTABLES', "/sbin/iptables");
+@define('BIN_PYTHON', "/usr/bin/python");
+@define('BIN_DOS2UNIX', "/usr/bin/dos2unix");
+@define('BIN_TOUCH', "/bin/touch");
+@define('BIN_SED', "/bin/sed");
+@define('BIN_RM', "/bin/rm");
+@define('BIN_MV', "/bin/mv");
+@define('BIN_SED', "/bin/sed");
+@define('BIN_GREP', "/bin/grep");
+@define('BIN_ROUTE', "/sbin/route");
+@define('BIN_IFCONFIG', "/sbin/ifconfig");
+@define('BIN_IWLIST', "/sbin/iwlist");
+
+@define('BIN_DNSMASQ', "/usr/sbin/dnsmasq");
+
+@define('BIN_HOSTAPDMANA', "/usr/share/fruitywifi/www/modules/mana/includes/hostapd");
+@define('BIN_HOSTAPDKARMA', "/usr/share/fruitywifi/www/modules/karma/includes/hostapd");
 
 ?>

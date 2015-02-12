@@ -1,14 +1,14 @@
 <?
 include_once "config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
 ?>
 <!DOCTYPE html>
 
-<? include_once WWWPATH."includes/menu.php"; ?>
+<? include_once WWWPATH."/includes/menu.php"; ?>
 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 <script src="js/jquery.js"></script>

@@ -1,16 +1,16 @@
 <?
 include_once "config/config.php";
 
-require_once WWWPATH."includes/login_check.php";
-require_once WWWPATH."includes/filter_getpost.php";
-include_once WWWPATH."includes/functions.php";
+require_once WWWPATH."/includes/login_check.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
-include_once WWWPATH."includes/menu.php";
+include_once WWWPATH."/includes/menu.php";
 
 function showLog($filename, $path) {
 
 	$fh = fopen($path, "r"); // or die("Could not open file.");
-	if(filesize($path)) {
+	if(is_file($path) and filesize($path)) {
 		$data = fread($fh, filesize($path)); // or die("Could not read file.");
 		fclose($fh);
 		$data_array = explode("\n", $data);
@@ -27,7 +27,7 @@ function showLog($filename, $path) {
 	}
 }
 
-$logs = glob(LOGPATH.'*');
+$logs = glob(LOGPATH.'/*');
 
 for ($i = 0; $i < count($logs); $i++) {
 	$filename = str_replace(LOGPATH,"",$logs[$i]);

@@ -1,7 +1,7 @@
 <?
 include_once "config/config.php";
 
-include_once WWWPATH."includes/users.php";
+include_once WWWPATH."/includes/users.php";
 
 session_start();
 session_regenerate_id(true);
