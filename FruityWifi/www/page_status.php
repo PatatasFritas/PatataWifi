@@ -92,7 +92,7 @@ if ($ap_mode == "1") {
 	$iswlanup = exec("ps auxww | grep hostapd | grep -v -e grep");
 }
 
-$hostapd_modes = array(1 => "Hostapd", 3 => "Hostapd-Mana", 4 => "Hostapd-Karma", 2 => "Airmon-ng");
+$hostapd_modes = array(1 => "Hostapd", 3 => "Hostapd-Mana", 4 => "Hostapd-Karma", 2 => "Airbase-ng");
 
 echo "<div style='text-align:left;'>";
 //echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";

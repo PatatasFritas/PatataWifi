@@ -114,7 +114,7 @@ then
     echo "| Installing aircrack-ng       |"
     echo "+------------------------------+"
 
-    apt-get -y install libssl-dev wireless-tools iw
+    apt-get -y install libnl-dev libnl1 libssl-dev wireless-tools iw
 
     #Aircrack-ng 1.2-beta1
     #wget http://download.aircrack-ng.org/aircrack-ng-1.2-beta1.tar.gz
@@ -128,10 +128,11 @@ then
 
     make
     make install
+
     ln -s /usr/local/sbin/airmon-ng /usr/sbin/airmon-ng
     ln -s /usr/local/sbin/airbase-ng /usr/sbin/airbase-ng
-    #cd ../
-    cd tmp-install
+    cd ..
+    #cd tmp-install
 
     echo "[aircrack-ng setup completed]"
 
@@ -224,6 +225,7 @@ sed -i $EXEC FruityWifi/conf/dnsmasq.conf
 EXEC="s,^dhcp-leasefile=.*,dhcp-leasefile="$fruitywifi_log_path"/dhcp.leases,g"
 sed -i $EXEC FruityWifi/conf/dnsmasq.conf
 
+touch $fruitywifi_log_path"/sudo.log"
 EXEC="s,^Defaults logfile =.*,Defaults logfile = "$fruitywifi_log_path"/sudo.log,g"
 sed -i $EXEC sudo-setup/fruitywifi
 
@@ -241,10 +243,8 @@ echo
 
 mkdir -v -p /usr/share/fruitywifi/
 cp -a ./FruityWifi/* /usr/share/fruitywifi/
-#ln -s $fruitywifi_log_path /usr/share/FruityWifiwww/logs
-#ln -s /usr/share/fruitywifi/ /usr/share/FruityWifi
 
-# Change Permissions
+# Change Owner
 chown -R fruitywifi:fruitywifi /usr/share/fruitywifi
 chown -R fruitywifi:fruitywifi $log_path
 

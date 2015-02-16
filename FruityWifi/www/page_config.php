@@ -174,7 +174,7 @@ $ifaces = explode("|", $ifaces);
 		<? if (file_exists("/usr/share/fruitywifi/www/modules/karma/includes/hostapd")) { ?>
 		<option value="4" <? if ($ap_mode == 4) echo "selected"?> >Hostapd-Karma</option>
 		<? } ?>
-		<option value="2" <? if ($ap_mode == 2) echo "selected"?> >Airmon-ng</option>
+		<option value="2" <? if ($ap_mode == 2) echo "selected"?> >Airbase-ng</option>
 	    </select>
 	    </form>
 	</td>
