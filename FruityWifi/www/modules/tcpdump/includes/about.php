@@ -1,0 +1,5 @@
+<b>Tcpdump</b>  prints  out  a description of the contents of packets on a network interface that match the boolean expression.  It can also be run with the -w flag, which causes it to save the packet data to a file for later analysis, and/or with the -r flag, which causes it to read from a saved packet file rather than to read  packets from a network interface.  In all cases, only packets that match expression will be processed by tcpdump.
+
+<br><br>Tcpdump  will,  if not run with the -c flag, continue capturing packets until it is interrupted by a SIGINT signal (generated, for example, by typing your interrupt character, typically control-C) or a SIGTERM signal (typically generated with the kill(1) command); if run with the -c flag, it will capture  packets  until  it  is interrupted by a SIGINT or SIGTERM signal or the specified number of packets have been processed.
+
+<br><br><b>Authors: </b> The original authors are: Van Jacobson, Craig Leres and Steven McCanne, all of the Lawrence Berkeley National Laboratory, University of California, Berkeley, CA.

@@ -121,7 +121,7 @@ if(isset($_POST['pass_old']) and isset($_POST['pass_new']) and isset($_POST['pas
     include WWWPATH."/includes/users.php";
     if ( ($users['admin'] == md5(PASSWORDSALT.$_POST['pass_old'])) and ($_POST['pass_new'] == $_POST['pass_new_repeat'])) {
 
-	    exec_fruitywifi("sed -i 's/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_old'])."\\\"/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_new'])."\\\"/g' ./users.php");
+	    exec_fruitywifi("sed -i 's/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_old'])."\\\"/\\\=\\\"".md5(PASSWORDSALT.$_POST['pass_new'])."\\\"/g' ./includes/users.php");
 
 	    $pass_msg = 1;
     } else {

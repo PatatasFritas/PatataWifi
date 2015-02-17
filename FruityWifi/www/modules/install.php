@@ -6,7 +6,15 @@ require_once WWWPATH."/includes/login_check.php";
 require_once WWWPATH."/includes/filter_getpost.php";
 include_once WWWPATH."/includes/functions.php";
 
-$module = @$_GET['module'];
+
+
+if (isset($_GET['done']) and $_GET['done']!="") {
+    $module = $_GET['done'];
+    exec_log(BIN_SED." -i 's/mod_installed=.*/mod_installed=\"1\";/' ./".$module."/_info_.php");
+    header('Location: '.WEBPATH.'/modules/'.$module);
+    exit;
+} elseif (isset($_GET['module']) and $_GET['module']!="") {
+    $module = $_GET['module'];
 ?>
 <m-eta http-equiv="refresh" content="1; url=install.php?module=<?=$module?>">
 <script src="<?=WEBPATH?>/js/jquery.js"></script>
@@ -33,7 +41,7 @@ function getLogs(service, path) {
 		    $("#log").append( value ).append("<br>");
 		    if (value == "..DONE..") {
     			setTimeout(function() {
-    			    window.location = "./<?=$module?>";
+    			    window.location = "./install.php?done=<?=$module?>";
     			}, 2000);
 		    }
 		});
@@ -43,3 +51,7 @@ function getLogs(service, path) {
 }
 getLogs("", "")
 </script>
+
+<?
+}
+?>

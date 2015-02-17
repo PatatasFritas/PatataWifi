@@ -1,0 +1,31 @@
+<b>Beacon Flood Mode</b>
+<br>Sends beacon frames to show fake APs at clients
+<br>
+<br>OPTIONS:
+<br>&nbsp;&nbsp;      <b>-n</b> &lt;ssid&gt;
+<br>&nbsp;         Use SSID &lt;ssid&gt; instead of randomly generated ones
+<br><br>&nbsp;&nbsp;      <b>-f</b> &lt;filename&gt;
+<br>&nbsp;         Read SSIDs from file
+<br><br>&nbsp;&nbsp;      <b>-v</b> &lt;filename&gt;
+<br>&nbsp;         Read MACs and SSIDs from file. See example file!
+<br><br>&nbsp;&nbsp;      <b>-d</b>
+<br>&nbsp;         Show station as Ad-Hoc
+<br><br>&nbsp;&nbsp;      <b>-w</b>
+<br>&nbsp;         Set WEP bit (Generates encrypted networks)
+<br><br>&nbsp;&nbsp;      <b>-g</b>
+<br>&nbsp;         Show station as 54 Mbit
+<br><br>&nbsp;&nbsp;      <b>-t</b>
+<br>&nbsp;         Show station using WPA TKIP encryption
+<br><br>&nbsp;&nbsp;      <b>-a</b>
+<br>&nbsp;         Show station using WPA AES encryption
+<br><br>&nbsp;&nbsp;      <b>-m</b>
+<br>&nbsp;         Use valid accesspoint MAC from OUI database
+<br><br>&nbsp;&nbsp;      <b>-h</b>
+<br>&nbsp;         Hop to channel where AP is spoofed
+<br>&nbsp;         This makes the test more effective against some devices/drivers
+<br>&nbsp;         But it reduces packet rate due to channel hopping.
+<br><br>&nbsp;&nbsp;      <b>-c</b> &lt;chan&gt;
+<br>&nbsp;         Fake an AP on channel &lt;chan&gt;. If you want your card to hop on
+<br>&nbsp;         this channel, you have to set -h option, too!
+<br><br>&nbsp;&nbsp;      <b>-s</b> &lt;pps&gt;
+<br>&nbsp;         Set speed in packets per second (Default: 50)

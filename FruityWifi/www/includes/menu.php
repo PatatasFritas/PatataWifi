@@ -27,6 +27,7 @@ header("Pragma: no-cache");
                 <a href="<?=WEBPATH?>/page_config.php">config</a> |
                 <a href="<?=WEBPATH?>/page_modules.php">modules</a> |
                 <a href="<?=WEBPATH?>/page_logs.php">logs</a> |
+                <a href="<?=WEBPATH?>/page_system.php">system</a> |
                 <a href="<?=WEBPATH?>/logout.php">logout</a> | <?=$version?>
             </div>
         </td>

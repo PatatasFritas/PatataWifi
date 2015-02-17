@@ -1,0 +1,41 @@
+h1 { 
+    font-family:Verdana,Helvetica,Sans Serif; 
+    word-spacing:0.0em; letter-spacing:0.0em; 
+    line-height:1.0em; font-size:17px; 
+    font-weight:800; 
+    background-color:white; 
+    color:#304E87; 
+}
+
+h2 { 
+    font-family:Verdana,Helvetica,Sans Serif; 
+    word-spacing:0.0em; letter-spacing:0.0em; 
+    line-height:1.0em; font-size:17px; 
+    font-weight:800; 
+    background-color:white; 
+    color:#304E87; 
+}
+
+td { 
+    font-family:Verdana,Helvetica,Sans Serif; 
+    font-size:12px; 
+    font-weight:400; 
+    word-spacing:0.0em; 
+    letter-spacing:0.0em; 
+    color:#000000; 
+}
+
+input { 
+    font-family:Verdana,Helvetica,Sans Serif; 
+    font-size:10px; 
+}
+
+body { 
+    font-family:Verdana,Helvetica,Sans Serif; 
+    font-size:12px; 
+    font-weight:400; 
+    word-spacing:0.0em; 
+    letter-spacing:0.0em; 
+    color:#000000;
+}
+

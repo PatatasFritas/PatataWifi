@@ -1,0 +1,32 @@
+#!/bin/bash
+
+IPTABLES=/sbin/iptables
+IFACE_INTERNET="wlan0"
+IFACE_WIFI="wlan2"
+
+# FLUSH RULES
+#$IPTABLES -F
+#$IPTABLES -t nat -F
+#$IPTABLES -t mangle -F
+#$IPTABLES -X
+#$IPTABLES -t nat -X
+#$IPTABLES -t mangle -X
+
+$IPTABLES -A POSTROUTING -t nat -o $IFACE_INTERNET -j MASQUERADE
+
+# Create a new chain named 'internet' in mangle table with this command
+$IPTABLES -t mangle -N internet
+
+# Send all HTTP traffic from WIFI to the newly created chain for further processing
+$IPTABLES -t mangle -A PREROUTING -i $IFACE_WIFI -p tcp -m tcp --dport 80 -j internet
+
+# Mark all traffic from internet chain with 99
+$IPTABLES -t mangle -A internet -j MARK --set-mark 99
+
+# Redirect all marked traffic to the portal 
+$IPTABLES -t nat -A PREROUTING -i $IFACE_WIFI -p tcp -m mark --mark 99 -m tcp --dport 80 -j DNAT --to-destination 10.0.0.1
+
+
+
+echo "1" > /proc/sys/net/ipv4/ip_forward
+

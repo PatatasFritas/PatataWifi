@@ -7,13 +7,16 @@ include_once WWWPATH."/includes/functions.php";
 
 function macaddress($interface) {
 	exec_log(BIN_IFCONFIG." -a $interface |grep 'HWaddr'", $output);
-    if(preg_match("/[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}/", $output[0], $macs)) {
-		$mac = $macs[0];
-		return $mac;
-    } else {
-	    return NULL;
-	    //die("Mac no encontrada.");
-    }
+	if(isset($output[0])) {
+        if(preg_match("/[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}/", $output[0], $macs)) {
+    		$mac = $macs[0];
+    		return $mac;
+        } else {
+    	    return NULL;
+        }
+   	} else {
+       	return NULL;
+   	}
 }
 
 function iptables_clean() {

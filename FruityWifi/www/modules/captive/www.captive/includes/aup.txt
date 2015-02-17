@@ -1,0 +1,30 @@
+1. All information sent over public data networks is to be UNCLASSIFIED and fit
+for public view.
+
+2. The use of the Internet suite PCs to undertake any activity contrary to civil law may result in severe disciplinary action.  Examples of these are listed below (the list is not extensive):
+
+   a. Obtaining, installing, storing or using software or information obtained in violation of the appropriate vendor's patent, copyright, trade secret or licence agreement.
+   
+   b. Installing, accessing, storing, processing, downloading, producing, displaying or distributing offensive, indecent or obscene material.
+
+   c. Developing or introducing malicious software of any kind.
+
+3. The following uses of the Internet are PROHIBITED:
+
+   a. Illegal, fraudulent and malicious activities.
+
+   b. Partisan political activity, political or religious lobbying or advocacy or activities on behalf of organisations having no connection with the MoD.
+
+   c. Accessing, storing, processing, displaying or distributing offensive or obscene material such as pornography and hate literature.
+
+   d. Storing, processing or distributing classified, propriety or other sensitive or for official use only information on a computer not explicitly approved for that purpose.
+
+   e. Annoying or harassing another person, e.g. by sending or displaying uninvited E-mail of a personal nature or by using lewd or offensive language in an E-mail message.
+
+   f. Using another person's account or identity.
+
+   g. Viewing, damaging or deleting files or communications belonging to others without appropriate authorisation or permission.
+
+   h. Attempting to circumvent or defect security or auditing systems without prior authorization and other than as part of legitimate system testing or security research.
+
+   i. Obtaining, installing, storing or using software obtained in violation of the appropriate vendor's patent, copyright, trade secret or license agreement.

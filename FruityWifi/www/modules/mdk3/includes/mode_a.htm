@@ -1,0 +1,16 @@
+<b>Authentication DoS mode</b>
+<br>Sends authentication frames to all APs found in range.
+<br>Too much clients freeze or reset almost every AP.
+<br>
+<br>OPTIONS:
+<br>&nbsp;&nbsp;      -a &lt;ap_mac&gt;
+<br>&nbsp;&nbsp;         Only test the specified AP
+<br><br>&nbsp;&nbsp;      <b>-m</b>
+<br>&nbsp;&nbsp;         Use valid client MAC from OUI database
+<br><br>&nbsp;&nbsp;      <b>-c</b>
+<br>&nbsp;&nbsp;         Do NOT check for test being successful
+<br><br>&nbsp;&nbsp;      <b>-i</b> &lt;ap_mac>
+<br>&nbsp;&nbsp;         Perform intelligent test on AP (-a and -c will be ignored)
+<br>&nbsp;&nbsp;         This test connects clients to the AP and reinjects sniffed data to keep them alive
+<br><br>&nbsp;&nbsp;      <b>-s</b> &lt;pps>
+<br>&nbsp;&nbsp;         Set speed in packets per second (Default: unlimited)

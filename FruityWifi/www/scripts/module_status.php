@@ -29,8 +29,11 @@ if ($service == "s_wireless") {
 } else {
 	if(file_exists("../modules/".$service."/_info_.php")) {
 	    include "../modules/".$service."/_info_.php";
-	    if (isset($mod_isup))
-	    	$ismoduleup = exec($mod_isup);
+	    if (isset($mod_isup) and $mod_isup!="") {
+    	    $ismoduleup = exec($mod_isup);
+	    } else {
+    	    $ismoduleup = false;
+	    }
 	}
 }
 

@@ -1,0 +1,17 @@
+<b>Deauthentication / Disassociation Amok Mode</b>
+<br>Kicks everybody found from AP
+<br>
+<br>OPTIONS:
+<br>&nbsp;&nbsp;          <b>-w</b> &lt;filename&gt;
+<br>&nbsp;&nbsp;         Read file containing MACs not to care about (Whitelist mode)
+<br><br>&nbsp;&nbsp;      <b>-b</b> &lt;filename&gt;
+<br>&nbsp;&nbsp;         Read file containing MACs to run test on (Blacklist Mode)
+<br><br>&nbsp;&nbsp;      <b>-s</b> &lt;pps&gt;
+<br>&nbsp;&nbsp;         Set speed in packets per second (Default: unlimited)
+<br><br>&nbsp;&nbsp;      <b>-c</b> [chan,chan,chan,...]
+<br>&nbsp;&nbsp;         Enable channel hopping. Without providing any channels, mdk3 will hop an all
+<br>&nbsp;&nbsp;         14 b/g channels. Channel will be changed every 5 seconds.
+<br><br>&nbsp;&nbsp;      <b>-d</b> [target]
+<br>&nbsp;&nbsp;         Enable WPA/WPA2-Downgrade-Attack
+<br>&nbsp;&nbsp;         Blocks clients only if they use WPA Encryption, WEP and unencrypted traffic still works
+<br>&nbsp;&nbsp;         Use this test to see if the Sysadmin thinks WEP is still enough security when WPA "doesn't work"

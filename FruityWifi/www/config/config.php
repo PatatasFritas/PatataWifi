@@ -41,31 +41,7 @@ $io_action="wlan0";
 //------
 
 # EXEC
-$bin_sudo = "/usr/bin/sudo";
-$bin_ifconfig = "/sbin/ifconfig";
-$bin_iwlist = "/sbin/iwlist";
-$bin_sh = "/bin/sh";
-$bin_echo = "/bin/echo";
-$bin_grep = "/usr/bin/ngrep";
-$bin_killall = "/usr/bin/killall";
-$bin_cp = "/bin/cp";
-$bin_chmod = "/bin/chmod";
-$bin_sed = "/bin/sed";
-$bin_rm = "/bin/rm";
-$bin_route = "/sbin/route";
-$bin_perl = "/usr/bin/perl";
-$bin_nmcli = "/usr/share/fruitywifi/www/modules/nmcli/includes/NetworkManager/cli/src/nmcli";
-$bin_ln = "/bin/ln";
-$bin_awk = "/usr/bin/awk";
-$bin_grep = "/bin/grep";
-$bin_sed = "/bin/sed";
-$bin_iptables = "/sbin/iptables";
-$bin_cat = "/bin/cat";
-$bin_dos2unix = "/usr/bin/dos2unix";
-$bin_mv = "/bin/mv";
-$bin_touch = "/bin/touch";
-$bin_python = "/usr/bin/python";
-
+//@define('BIN_', "/");
 @define('BIN_SUDO', "/usr/bin/sudo");
 @define('BIN_ECHO', "/bin/echo");
 @define('BIN_CP', "/bin/cp");
@@ -85,6 +61,10 @@ $bin_python = "/usr/bin/python";
 @define('BIN_ROUTE', "/sbin/route");
 @define('BIN_IFCONFIG', "/sbin/ifconfig");
 @define('BIN_IWLIST', "/sbin/iwlist");
+@define('BIN_AWK', "/usr/bin/awk");
+
+@define('BIN_CAT', "/bin/cat");
+
 
 @define('BIN_DNSMASQ', "/usr/sbin/dnsmasq");
 

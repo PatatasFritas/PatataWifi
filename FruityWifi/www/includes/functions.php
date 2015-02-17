@@ -116,7 +116,7 @@ function open_file($filename) {
             return $data;
         }
     }
-
+    return null;
 }
 
 function start_iface($iface, $ip, $gw) {

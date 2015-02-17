@@ -2,14 +2,15 @@
 include_once dirname(__FILE__)."/../config/config.php";
 
 require_once WWWPATH."/includes/login_check.php";
-//require_once WWWPATH."/includes/filter_getpost.php";
-//include_once WWWPATH."/includes/functions.php";
+require_once WWWPATH."/includes/filter_getpost.php";
+include_once WWWPATH."/includes/functions.php";
 
 $filename = LOGPATH."/dhcp.leases";
 
-if ( 0 < filesize( $filename ) ) {
-	$fh = fopen($filename, "r"); //or die("Could not open file.");
-	$data = fread($fh, filesize($filename)); //or die("Could not read file.");
+$output = null;
+if (file_exists($filename) and 0 < filesize( $filename ) ) {
+	$fh = fopen($filename, "r");
+	$data = fread($fh, filesize($filename));
 
 	fclose($fh);
 	$data = explode("\n",$data);
@@ -23,4 +24,5 @@ if ( 0 < filesize( $filename ) ) {
 	}
 }
 echo json_encode($output);
+
 ?>
