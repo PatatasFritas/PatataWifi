@@ -25,7 +25,8 @@ then
 fi
 
 chmod 755 ./mdk3-v6/mdk3
-cp ./mdk3-v6/mdk3cd .. /usr/bin/
+cp ./mdk3-v6/mdk3 /usr/bin/
+cd ..
 
 #echo
 #echo "Installing libssl-dev..."

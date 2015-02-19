@@ -77,14 +77,20 @@ if (isset($_GET['service']) and $_GET['service'] == "mon0") {
 
 //! -------------- WIRELESS ------------------
 
-if(isset($_POST['newSSID'])){
+if(isset($_POST['newSSID']) and $_POST['newSSID']!=""){
 
     $hostapd_ssid=$_POST['newSSID'];
 
     exec_fruitywifi("sed -i 's/hostapd_ssid=.*/hostapd_ssid=\\\"".$_POST['newSSID']."\\\";/g' ./config/config.php");
 
-    exec_fruitywifi("/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid $_POST[newSSID]");
-
+    //exec_fruitywifi("/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_change_ssid $_POST[newSSID]");
+    if ($ap_mode==4) {
+        exec_fruitywifi(BIN_HOSTAPDKARMA_CLI." -p /var/run/hostapd-phy0 karma_change_ssid \"".$_POST['newSSID']."\"");
+    } elseif ($ap_mode==3) {
+        exec_fruitywifi(BIN_HOSTAPDMANA_CLI." karma_change_ssid \"".$_POST['newSSID']."\"");
+    } elseif ($ap_mode==1) {
+        exec_fruitywifi("hostapd_cli -p /var/run/hostapd-phy0 wps_config \"".$_POST['newSSID']."\" OPEN NONE \"\"");
+    }
     // replace interface in hostapd.conf and hostapd-secure.conf
     exec_fruitywifi("/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd.conf");
     exec_fruitywifi("/bin/sed -i 's/^ssid=.*/ssid=".$_POST['newSSID']."/g' /usr/share/fruitywifi/conf/hostapd-secure.conf");
@@ -129,9 +135,6 @@ if(isset($_POST['pass_old']) and isset($_POST['pass_new']) and isset($_POST['pas
     }
 }
 
-?>
-
-<?
 #echo $io_out_iface;
 #echo $io_in_iface;
 

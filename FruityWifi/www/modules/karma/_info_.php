@@ -16,7 +16,11 @@ $mod_isup=BIN_SUDO." $mod_path/includes/hostapd_cli -p /var/run/hostapd-phy0 kar
 
 //Hide karma
 if($ap_mode!=4 and $_SERVER['PHP_SELF']!="/page_modules.php" and $mod_installed!=0) $mod_panel="";
+//Hide start when wireless is down
+if($ap_mode==4 and isset($iswlanup) and $iswlanup==false) $mod_isup="";
+
 
 @define('BIN_HOSTAPDKARMA', "/usr/share/fruitywifi/www/modules/karma/includes/hostapd");
+@define('BIN_HOSTAPDKARMA_CLI', "/usr/share/fruitywifi/www/modules/karma/includes/hostapd_cli");
 
 ?>

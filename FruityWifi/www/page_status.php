@@ -32,7 +32,7 @@ $hostapd_modes = array(1 => "Hostapd", 3 => "Hostapd-Mana", 4 => "Hostapd-Karma"
 
 echo "<div style='text-align:left;'>";
 //echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>Wireless</div> ";
-echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>Wireless<br/>".$hostapd_modes[$ap_mode]."</div> ";
+echo "<div style='border:0px; display:inline-block; width:170px; text-align:right;'>Wireless (".$hostapd_modes[$ap_mode].")</div> ";
 if ($iswlanup != "") {
 ?>
     <div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div>
@@ -48,6 +48,26 @@ if ($iswlanup != "") {
     <div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'>
         <a href='scripts/status_wireless.php?service=wireless&action=start' class='div-a'>start</a>
     </div>
+<?
+}
+echo "</div>";
+
+//! dnsmasq
+
+echo "<div style='text-align:left;'>";
+echo "<div style='border:0px; display:inline-block; width:170px; text-align:right;'>dnsmasq</div> ";
+$isdnsmasqup = exec("ps auxww | grep \"/dnsmasq\" | grep -v -e grep");
+if ($isdnsmasqup != "") {
+?>
+    <div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:lime;'>enabled.</div>
+    <div style='border:0px; display:inline-block;'>|</div>
+    <div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'></div>
+<?
+} else {
+?>
+    <div style='border:0px; display:inline-block; width:63px; font-weight:bold; color:red;'>disabled.</div>
+    <div style='border:0px; display:inline-block;'>|</div>
+    <div style='display:inline-block;font-weight:bold; width:36px; visibility:visible;'></div>
 <?
 }
 echo "</div>";
@@ -70,9 +90,9 @@ if (count($output) > 0) {
                 if ($mod_panel == "show" and $mod_type == "service") {
 
                     if ($mod_alias != "") {
-                        echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_alias</div> ";
+                        echo "<div style='border:0px; display:inline-block; width:170px; text-align:right;'>$mod_alias</div> ";
                     } else {
-                        echo "<div style='border:0px; display:inline-block; width:84px; text-align:right;'>$mod_name</div> ";
+                        echo "<div style='border:0px; display:inline-block; width:170px; text-align:right;'>$mod_name</div> ";
                     }
                     if($mod_installed=="0") {
                     ?>
@@ -259,7 +279,7 @@ if (count($output) > 0) {
 <br/>
 
 <div class="rounded-top" align="center"> Stations </div>
-<div class="rounded-bottom">
+<div class="rounded-bottom" style="width:500px">
     <?
     $filename = LOGPATH."/dhcp.leases";
     if (file_exists($filename) and 0 < filesize($filename) ) {
@@ -289,12 +309,12 @@ if (count($output) > 0) {
         }
 
         // Karma Kick Ban
-        if($ap_mode==4) {
+        if($ap_mode==3 or $ap_mode==4) {
             echo "
             <a href=\"scripts/status_wireless.php?service=wireless&action=kick&station=".$stationmac."\">!k</a>
-            <a href=\"scripts/status_wireless.php?service=wireless&action=ban&station=".$stationmac."\">!b</a>
-            <br/>";
+            <a href=\"scripts/status_wireless.php?service=wireless&action=ban&station=".$stationmac."\">!b</a>";
         }
+        echo "<br/>\n";
     }
 
     ?>

@@ -1,4 +1,5 @@
 <?
+set_time_limit(0);
 include_once dirname(__FILE__)."/../config/config.php";
 
 require_once WWWPATH."/includes/login_check.php";
@@ -103,6 +104,7 @@ if($ap_mode == "1") {
 
         exec_fruitywifi(BIN_ECHO." 1 > /proc/sys/net/ipv4/ip_forward");
         exec_fruitywifi(BIN_IPTABLES." -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -i $io_in_iface -A FORWARD -d 192.168.0.0/16 -j DROP");
 
 
     } elseif($_GET['action'] == "stop") {
@@ -154,7 +156,8 @@ if($ap_mode == "2") {
         iptables_clean();
 
         exec_fruitywifi(BIN_ECHO." 1 > /proc/sys/net/ipv4/ip_forward");
-        exec_fruitywifi("/sbin/iptables -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -i $io_in_iface -A FORWARD -d 192.168.0.0/16 -j DROP");
 
     } elseif($_GET['action'] == "stop") {
 
@@ -264,7 +267,8 @@ if($ap_mode == "3") {
         iptables_clean();
 
         exec_fruitywifi(BIN_ECHO." 1 > /proc/sys/net/ipv4/ip_forward");
-        exec_fruitywifi("/sbin/iptables -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -i $io_in_iface -A FORWARD -d 192.168.0.0/16 -j DROP");
 
     } elseif($_GET['action'] == "stop") {
 
@@ -381,7 +385,8 @@ if($ap_mode == "4") {
         iptables_clean();
 
         exec_fruitywifi(BIN_ECHO." 1 > /proc/sys/net/ipv4/ip_forward");
-        exec_fruitywifi("/sbin/iptables -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -t nat -A POSTROUTING -o $io_out_iface -j MASQUERADE");
+        exec_fruitywifi(BIN_IPTABLES." -i $io_in_iface -A FORWARD -d 192.168.0.0/16 -j DROP");
 
     } elseif($_GET['action'] == "stop") {
 
@@ -418,6 +423,8 @@ if($_GET['action'] == "kick" and isset($_GET['station'])) {
 		$station = $s[0].$s[1].':'.$s[2].$s[3].':'.$s[4].$s[5].':'.$s[6].$s[7].':'.$s[8].$s[9].':'.$s[10].$s[11];
 		// Wireless 1 -> /usr/sbin/hostapd_cli -P /var/run/hostapd-phy0
 		if ($ap_mode==1) $hostapdcli = "/usr/sbin/hostapd_cli -p /var/run/hostapd-phy0";
+		// Mana 3 ->
+		elseif ($ap_mode==3) $hostapdcli = "/usr/share/fruitywifi/www/modules/mana/includes/hostapd_cli";
 		// Karma 4 ->
 		elseif ($ap_mode==4) $hostapdcli = "/usr/share/fruitywifi/www/modules/karma/includes/hostapd_cli -p /var/run/hostapd-phy0";
 		else die('invalid ap mode');
@@ -434,8 +441,10 @@ if($_GET['action'] == "ban" and isset($_GET['station'])) {
 	$s = $_GET['station'];
 	if(preg_match("/[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}[0-9a-fA-F]{2}/", $s)) {
 		$station = $s[0].$s[1].':'.$s[2].$s[3].':'.$s[4].$s[5].':'.$s[6].$s[7].':'.$s[8].$s[9].':'.$s[10].$s[11];
+		// Mana 3 ->
+		if ($ap_mode==3) $hostapdcli = "/usr/share/fruitywifi/www/modules/mana/includes/hostapd_cli";
 		// Karma 4 ->
-		if ($ap_mode==4) $hostapdcli = "/usr/share/fruitywifi/www/modules/karma/includes/hostapd_cli -p /var/run/hostapd-phy0";
+		elseif ($ap_mode==4) $hostapdcli = "/usr/share/fruitywifi/www/modules/karma/includes/hostapd_cli -p /var/run/hostapd-phy0";
 		else die('invalid ap mode');
 		exec_fruitywifi("$hostapdcli karma_add_black_mac $station");
 		sleep(0.5);

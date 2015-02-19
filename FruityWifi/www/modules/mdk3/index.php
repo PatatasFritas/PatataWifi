@@ -67,7 +67,6 @@ if (isset($_POST['change_mode']) and $_POST['change_mode'] == "1") {
     if (file_exists(BIN_MDK3) and fileperms(BIN_MDK3) & 0x0040) {
         echo "&nbsp;&nbsp;&nbsp;&nbsp; mdk3 <font style='color:lime'>installed</font><br>";
     } else {
-        //echo "&nbsp;&nbsp;&nbsp;&nbsp; mdk3 <font style='color:red'>install</font><br>";
         echo "&nbsp;&nbsp;&nbsp;&nbsp; mdk3 <a href='includes/module_action.php?install=install_mdk3' style='color:red'>install</a><br>";
     }
     ?>

@@ -10,7 +10,7 @@ define('WEBPATH', "");
 define('PASSWORDSALT', "FruityWifi");
 
 $regex=1; // 1 (on) | 0 (off) >> web interface input validation.
-$regex_extra=" _-.[]*"; // extra characters allowed (input validation).
+$regex_extra=" _-.[]*,:"; // extra characters allowed (input validation).
 
 // Config
 $io_in_iface_extra="-";
@@ -69,6 +69,8 @@ $io_action="wlan0";
 @define('BIN_DNSMASQ', "/usr/sbin/dnsmasq");
 
 @define('BIN_HOSTAPDMANA', "/usr/share/fruitywifi/www/modules/mana/includes/hostapd");
+@define('BIN_HOSTAPDMANA_CLI', "/usr/share/fruitywifi/www/modules/mana/includes/hostapd_cli");
 @define('BIN_HOSTAPDKARMA', "/usr/share/fruitywifi/www/modules/karma/includes/hostapd");
+@define('BIN_HOSTAPDKARMA_CLI', "/usr/share/fruitywifi/www/modules/karma/includes/hostapd_cli");
 
 ?>

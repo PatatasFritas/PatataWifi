@@ -11,10 +11,12 @@ $mod_type="service";
 $mod_alias="Mana";
 $mod_installed="0";
 
-$mod_isup="/usr/share/fruitywifi/www/modules/$mod_name/includes/hostapd_cli -p /var/run/hostapd karma_get_state | tail -1 | grep 'KARMA EN'";
+$mod_isup=BIN_SUDO." /usr/share/fruitywifi/www/modules/$mod_name/includes/hostapd_cli -p /var/run/hostapd karma_get_state | tail -1 | grep 'KARMA EN'";
 
 //Hide mana
 if($ap_mode!=3 and $_SERVER['PHP_SELF']!="/page_modules.php" and $mod_installed!=0) $mod_panel="";
+//Hide start when wireless is down
+if($ap_mode==3 and isset($iswlanup) and $iswlanup==false) $mod_isup="";
 
 @define('BIN_HOSTAPDMANA', "/usr/share/fruitywifi/www/modules/mana/includes/hostapd");
 @define('BIN_HOSTAPDMANA_CLI', "/usr/share/fruitywifi/www/modules/mana/includes/hostapd_cli");
